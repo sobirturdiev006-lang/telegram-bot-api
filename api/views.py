@@ -4,11 +4,12 @@ from rest_framework.views import APIView
 
 from .models import Account
 from .serializers import AccountStartSerializer, AccountListSerializer
-
+from rest_framework.pagination import PageNumberPagination
 
 class AccountListView(generics.ListAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountListSerializer
+    pagination_class = PageNumberPagination
 
 
 class AccountStartView(APIView):
@@ -30,3 +31,7 @@ class AccountStartView(APIView):
         #     }
         #     return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
+class AccountDetailView(generics.RetrieveUpdateAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountListSerializer
+    lookup_field = 'telegram_id'
